@@ -10,7 +10,11 @@ const errorMiddleware = require('../middleware/error-middleware');
 
 // Middleware
 const corsOptions = {
-  origin: "https://pujamoneycollection.vercel.app", // React frontend
+  origin: [
+    "https://shreechitragupat.vercel.app", // Your frontend domain
+    "https://pujamoneycollection.vercel.app", // Your backend domain (optional)
+    "http://localhost:5173" // Local development
+  ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"],
   credentials: true,
 };
