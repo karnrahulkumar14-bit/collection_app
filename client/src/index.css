@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Yatra+One&display=swap');
+
+:root {
+  --primary-font: "Montserrat", sans-serif;
+  --secondary-font: "Yatra One", system-ui;
+  --primary-color: #080e42;
+  --secondary-color: #f7c331;
+  --third-color: #00d084;
+  --link-color: #f7882f;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: inherit;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 18px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+.main-content {
+  min-height: 480px;
+}
+
+.heading {
+  font-family: var(--secondary-font);
+}
+
+.primary-font {
+  font-family: "Montserrat", sans-serif;
+}
+
+.secondary-font {
+  font-family: "Yatra One", system-ui;
+}
+
+/* Header */
+.header-wrapper {
+  background-color: #fff;
+}
+
+.logo-wrap h1 {
+  font-family: var(--secondary-font);
+  margin: 0;
+}
+
+.form-control::placeholder {
+  opacity: 0.7;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  letter-spacing: 5px;
+  font-weight: 400;
+}
+
+@media(max-width:767px) {
+  body {
+    font-size: 16px;
+  }
+
+  .form-control::placeholder {
+    font-size: 16px;
+  }
+}
+
+/* footer */
+.footer-wrapper {
+  background-color: var(--primary-color);
+}
+
+.copyright {
+  letter-spacing: 2px;
+}
+
+/*  */
+.carousel-img {
+  height: 500px;
+  /* or vh like 70vh */
+  object-fit: cover;
+  /* keeps image proportion */
+}
+
+.carousel-item img {
+  width: 100%;
+}
+
+.total-amount {
+  background-color: var(--link-color);
+  max-width: 250px;
+  border-radius: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 1px 5px 5px var(--secondary-color);
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.heading h1 {
+  font-weight: 700;
+}
+
+.diplay-area {
+  padding-bottom: 3rem;
+}
+
+.collections ul.list-items {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.collections ul.list-items li.row.item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.collections ul.list-items li.row.item {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px;
+  background-color: var(--bs-gray-200);
+}
+
+.collections ul.list-items li.row.item:nth-child(2n) {
+  background-color: var(--bs-gray-100);
+}
+
+.collections .hs-amount {
+  font-weight: 700;
+}
+
+.collections .hs-name {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.collections ul.list-items li.row.item>div:first-child {
+  align-items: center;
+}
+
+.stats-card.donations {
+  border-left-color: var(--third-color);
+}
+
+.stats-card.expenses {
+  border-left-color: var(--secondary-color);
+}
+
+.stats-card.balance {
+  border-left-color: var(--link-color);
+}
+
+.stats-card {
+  border-left: 4px solid var(--primary-color);
+}
+
+.shadow-sm {
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+.card-wrapper .card {
+  height: 100%;
+}
+
+.card-wrapper {
+  margin: 0 0 50px;
+}
+
+@media(min-width:768px) {
+  .carousel-item img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 550px;
+  }
+
+  .card-wrapper .card img {
+    max-height: 350px;
+    object-fit: cover;
+    object-position: top;
+  }
+}
+
+@media(max-width:991px) {
+  body {
+    font-size: 16px;
+  }
+
+  .top-data-report {
+    padding: 0 25px;
+  }
+
+  .button-wrap {
+    margin-top: 15px;
+  }
+}
+
+@media(max-width:640px) {
+  body {
+    font-size: 14px;
+  }
+
+  .collections ul.list-items li.row.item>div:first-child {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  /* .hs-date.col-3 {
+    width: 100%;
+  } */
+
+  .collections ul.list-items {
+    padding: 15px !important;
+  }
+
+  .collections ul.list-items li.row.item {
+    padding: 8px;
+  }
+
+  .collections ul.list-items li .hs-date {
+    font-size: 12px;
+    order: 2;
+  }
+
+  .collections .hs-name {
+    order: 1;
+  }
+
+  .collections .hs-amount {
+    order: 3;
+  }
+}
+
+
+/* Dashboard */
+section.adminpanel-wrapper {
+  overflow: hidden;
+}
+@media(max-width:767px){
+  section.adminpanel-wrapper {
+   padding: 0 15px;
+  }
+  .adminpanel-wrapper button.nav-link i {
+    display: inline-block;
+    color: #000;
+    font-size: 55px;
+  }
+  .adminpanel-wrapper button.nav-link {
+    text-align: left;
+  }
+  .sidebar {
+    position: fixed;
+    background-color: #fff;
+    z-index: 50;
+  }
+  .body-content {
+    margin-top: 75px;
+  }
+}
