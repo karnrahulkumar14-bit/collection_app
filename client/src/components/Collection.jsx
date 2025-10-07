@@ -8,7 +8,7 @@ const Collection = ({ hideItems = false }) => {
     // Fetch donations
     const fetchDonations = async () => {
         try {
-            const res = await fetch("http://localhost:8080/api/auth/admin/collection");
+            const res = await fetch("https://pujamoneycollection.vercel.app/api/auth/admin/collection");
             const data = await res.json();
             setDonations(data);
         } catch (err) {
@@ -24,11 +24,11 @@ const Collection = ({ hideItems = false }) => {
     const handleSubmit = async () => {
         try {
             const token = localStorage.getItem("token");
-            let url = "http://localhost:8080/api/auth/admin/collection";
+            let url = "https://pujamoneycollection.vercel.app/api/auth/admin/collection";
             let method = "POST";
 
             if (selectedDonation) {
-                url = `http://localhost:8080/api/auth/admin/collection/${selectedDonation._id}`;
+                url = `https://pujamoneycollection.vercel.app/api/auth/admin/collection/${selectedDonation._id}`;
                 method = "PUT";
             }
 
@@ -63,7 +63,7 @@ const Collection = ({ hideItems = false }) => {
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`http://localhost:8080/api/auth/admin/collection/${id}`, {
+            const res = await fetch(`https://pujamoneycollection.vercel.app/api/auth/admin/collection/${id}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
