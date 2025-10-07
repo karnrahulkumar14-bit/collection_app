@@ -19,8 +19,8 @@ export const DonationProvider = ({ children }) => {
     setError(null);
     try {
       const [donRes, expRes] = await Promise.all([
-        fetch("http://localhost:8080/api/auth/admin/collection"),
-        fetch("http://localhost:8080/api/auth/admin/expenses")
+        fetch("https://pujamoneycollection.vercel.app/api/auth/admin/collection"),
+        fetch("https://pujamoneycollection.vercel.app/api/auth/admin/expenses")
       ]);
 
       if (!donRes.ok || !expRes.ok) throw new Error("Failed to fetch data");
