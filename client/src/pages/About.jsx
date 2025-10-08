@@ -40,7 +40,7 @@ const About = () => {
     {
       id: 4,
       image: RK,
-      title: "Rahul Kumar (Technial support)",
+      title: "Rahul Kumar (Technical support)",
       desc: "Age: 27Y"
     }
   ]
