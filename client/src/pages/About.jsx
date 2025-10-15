@@ -3,6 +3,8 @@ import PHOTO2 from '../assets/images/PHOTO2.jpg';
 import neeraj from '../assets/images/neeraj.jpg';
 import vikaram from '../assets/images/vikaram.jpg';
 import pushakar from '../assets/images/pushakar.jpg';
+import dhiraj from '../assets/images/dheeraj.png';
+import ayush from '../assets/images/ayush.png';
 import RK from '../assets/images/RK.jpg';
 import Gallery from '../components/Gallery';
 import TeamMembers from '../components/TeamMembers';
@@ -25,20 +27,32 @@ const About = () => {
       title:"Vikaram kumar karn (Captain)",
       desc:"Age: 18Y"
     },
+        {
+      id:2,
+      image: dhiraj,
+      title: "Dhiraj Kumar karn (Captain)",
+      desc: "Age: 21Y"
+    },
     {
-      id: 2,
+      id:3,
       image: neeraj,
       title: "Neeraj kumar karn (Lieutenant)",
       desc: "Age: 19Y"
     },
     {
-      id: 3,
+      id:4,
       image:pushakar,
       title:"Pushkar kumar karn (Lieutenant)",
       desc:"Age: 17Y"
     },
+        {
+      id:5,
+      image:ayush,
+      title:"Ayush kumar karn (Lieutenant)",
+      desc:"Age: 14Y"
+    },
     {
-      id: 4,
+      id:6,
       image: RK,
       title: "Rahul Kumar (Technical support)",
       desc: "Age: 27Y"
