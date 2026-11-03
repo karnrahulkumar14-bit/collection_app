@@ -1,13 +1,25 @@
-import Spend from '../components/Spend';
-import Report from '../components/Report';
+import { useState } from "react";
+import Spend from "../components/Spend";
+import Report from "../components/Report";
 
 const Expenses = () => {
-    return (
-        <>
-            <div className='container'><Report /> <Spend hideIcon={true} /></div>
-           
-        </>
-    )
-}
+  const [selectedYear, setSelectedYear] = useState(
+    new Date().getFullYear()
+  );
 
-export default Expenses
+  return (
+    <div className="container">
+      <Report
+        selectedYear={selectedYear}
+        onYearChange={setSelectedYear}
+      />
+
+      <Spend
+        hideIcon={true}
+        selectedYear={selectedYear}
+      />
+    </div>
+  );
+};
+
+export default Expenses;

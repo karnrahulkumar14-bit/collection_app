@@ -1,62 +1,192 @@
-import { useDonation } from "../store/DonationContext";
-import { Link } from "react-router-dom";
+import { useState, useMemo } from "react";
+import { useDonation } from "../store/useDonation";
+import YearSelector from "../components/YearSelector";
 
-const Report = () => {
-    const { totalDonations, totalExpenses, balance, loading, reloadData } = useDonation();
 
+const inr = (value) => `₹${Number(value).toLocaleString("en-IN")}`;
+
+const getYear = (dateString) =>
+  new Date(`${dateString}T00:00:00`).getFullYear();
+
+// Defined outside the component so it isn't a hook dependency
+const filterByYear = (items, year) =>
+  items.filter((item) => item.date && getYear(item.date) === Number(year));
+
+const sum = (items) =>
+  items.reduce((total, item) => total + Number(item.amount || 0), 0);
+
+const Report = ({ selectedYear: externalYear, onYearChange }) => {
+  const [internalYear, setInternalYear] = useState(new Date().getFullYear());
+
+  // Use parent year if provided; otherwise use internal year
+  const selectedYear = externalYear ?? internalYear;
+
+  const handleYearChange = (year) => {
+    setInternalYear(year);
+    onYearChange?.(year);
+  };
+
+  const { donations, expenses, reloadData, loading, error } = useDonation();
+
+  const filteredDonations = useMemo(
+    () => filterByYear(donations, selectedYear),
+    [donations, selectedYear]
+  );
+
+  const filteredExpenses = useMemo(
+    () => filterByYear(expenses, selectedYear),
+    [expenses, selectedYear]
+  );
+
+  const totalDonations = sum(filteredDonations);
+  const totalExpenses = sum(filteredExpenses);
+  const balance = totalDonations - totalExpenses;
+  const totalContributors = filteredDonations.length;
+
+  const spentPercent =
+    totalDonations > 0
+      ? Math.min(100, Math.round((totalExpenses / totalDonations) * 100))
+      : 0;
+
+  if (loading) {
     return (
-        <section className='report-wrapper mt-5 mb-5'>
-            <h2 className="fs-2 mb-3">Collection</h2>
-            <div className='row'>
-                <div className="col-sm-12 col-lg-4 mb-3 mb-lg-0 wow animate__fadeInUp">
-                    <div className="card stats-card donations">
-                        <div className="card-body">
-                            <Link to="/collections">
-                                <div className="row align-items-center">
-                                    <div className="col">
-                                        <h6 className="text-uppercase text-muted mb-3">Total Donations</h6>
-                                        <h3 className="mb-0">{loading ? <span className="spinner-border spinner-border-sm" /> : `₹ ${totalDonations}`}</h3>
-                                    </div>
-                                    <div className="col-auto"><i className="bi bi-currency-dollar text-primary fs-2"></i></div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-12 col-lg-4 mb-3 mb-lg-0 wow animate__fadeInUp">
-                    <div className="card stats-card expenses">
-                        <div className="card-body">
-                            <Link to="/expenses">
-                                <div className="row align-items-center">
-                                    <div className="col">
-                                        <h6 className="text-uppercase text-muted mb-3">Total Expenses</h6>
-                                        <h3 className="mb-0">{loading ? <span className="spinner-border spinner-border-sm" /> : `₹ ${totalExpenses}`}</h3>
-                                    </div>
-                                    <div className="col-auto"><i className="bi bi-currency-exchange text-danger fs-2"></i></div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-12 col-lg-4 wow animate__fadeInUp">
-                    <div className="card stats-card balance">
-                        <div className="card-body">
-                            <div className="row align-items-center">
-                                <div className="col">
-                                    <h6 className="text-uppercase text-muted mb-3">Current Balance</h6>
-                                    <h3 className="mb-0"> {loading ? <span className="spinner-border spinner-border-sm" /> : `₹ ${balance}`}</h3>
-                                </div>
-                                <div className="col-auto"><i className="bi bi-piggy-bank text-success fs-2"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button className="btn btn-primary mt-3" onClick={reloadData}>
-                Refresh Data
-            </button>
-        </section>
-    )
-}
+      <section className="rp-wrapper">
+        <div className="rp-state">
+          <div className="rp-spinner" />
+          <p>Loading report…</p>
+        </div>
+      </section>
+    );
+  }
 
-export default Report
+  if (error) {
+    return (
+      <section className="rp-wrapper">
+        <div className="rp-state rp-state--error">
+          <i className="bi bi-exclamation-circle fs-3"></i>
+          <p>{error}</p>
+          <button type="button" className="rp-btn" onClick={reloadData}>
+            Try again
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  const cards = [
+    {
+      key: "donations",
+      label: "Total Collection",
+      value: inr(totalDonations),
+      icon: "bi-currency-dollar",
+      tone: "blue",
+      hint: `${totalContributors} contribution${totalContributors === 1 ? "" : "s"}`,
+    },
+    {
+      key: "expenses",
+      label: "Total Expenses",
+      value: inr(totalExpenses),
+      icon: "bi-receipt",
+      tone: "red",
+      hint: `${filteredExpenses.length} expense${filteredExpenses.length === 1 ? "" : "s"}`,
+    },
+    {
+      key: "balance",
+      label: "Available Balance",
+      value: inr(balance),
+      icon: "bi-piggy-bank",
+      tone: balance < 0 ? "red" : "green",
+      hint: balance < 0 ? "Spending exceeds collection" : "Remaining funds",
+    },
+    {
+      key: "contributors",
+      label: "Total Contributors",
+      value: totalContributors.toLocaleString("en-IN"),
+      icon: "bi-people-fill",
+      tone: "cyan",
+      hint: `Donors in ${selectedYear}`,
+    },
+  ];
+
+  return (
+    <section className="rp-wrapper">
+      {/* Top bar */}
+      <div className="rp-topbar">
+        <span className="rp-topbar__text">
+          Showing report for {selectedYear}
+        </span>
+        <button type="button" className="rp-btn" onClick={reloadData}>
+          <i className="bi bi-arrow-repeat"></i>
+          Refresh Data
+        </button>
+      </div>
+
+      {/* Header card */}
+      <div className="rp-panel">
+        <div className="rp-panel__head">
+          <div>
+            <h1 className="rp-title">Annual Report</h1>
+            <p className="rp-subtitle">
+              Collection, expenses and balance · Selected year {selectedYear}
+            </p>
+          </div>
+          <div className="rp-year">
+            <YearSelector
+              defaultYear={selectedYear}
+              onChange={handleYearChange}
+            />
+          </div>
+        </div>
+
+        {/* Stat cards */}
+        <div className="rp-grid">
+          {cards.map((card) => (
+            <article key={card.key} className={`rp-card rp-card--${card.tone}`}>
+              <div className="rp-card__info">
+                <span className="rp-card__label">{card.label}</span>
+                <strong className="rp-card__value">{card.value}</strong>
+                <span className="rp-card__hint">{card.hint}</span>
+              </div>
+              <div className="rp-card__icon">
+                <i className={`bi ${card.icon}`}></i>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Spending progress */}
+        <div className="rp-progress">
+          <div className="rp-progress__row">
+            <span>Funds used</span>
+            <span>{spentPercent}%</span>
+          </div>
+          <div className="rp-progress__track">
+            <div
+              className={`rp-progress__bar ${
+                spentPercent >= 100 ? "is-full" : ""
+              }`}
+              style={{ width: `${spentPercent}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Footer summary */}
+        <div className="rp-summary">
+          <div>
+            <strong>Net balance</strong>
+            <small>
+              {totalContributors} records · {selectedYear}
+            </small>
+          </div>
+          <span
+            className={`rp-summary__amount ${balance < 0 ? "is-negative" : ""}`}
+          >
+            {inr(balance)}
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Report;

@@ -1,0 +1,69 @@
+
+.year-selector {
+    width: 250px;
+    height: 40px;
+    padding: 0 38px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #ffffff;
+    border: 1px solid #e4e8ee;
+    border-radius: 20px;
+}
+
+.year-calendar-icon {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  color: #2165f5;
+}
+
+.year-label {
+  font-weight: 400;
+  color: #71819b;
+}
+
+.year-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+}
+
+.year-value {
+  font-weight: 700;
+  color: #192e4d;
+  pointer-events: none;
+}
+
+.year-dropdown select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.year-dropdown-arrow {
+  width: 25px;
+  height: 25px;
+  color: #71819b;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.report-wrapper .card {
+    margin-bottom: 0;
+}
+@media (max-width: 576px) {
+    .report-wrapper .card {
+        margin-bottom: 20px;
+    }
+    .year-selector {
+      width: auto;
+      max-width: 235px;
+    }
+}
+
