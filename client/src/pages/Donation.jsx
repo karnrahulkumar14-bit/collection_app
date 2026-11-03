@@ -1,16 +1,25 @@
-
-import Collection from '../components/Collection';
-import Report from '../components/Report';
+import { useState } from "react";
+import Collection from "../components/Collection";
+import Report from "../components/Report";
 
 const Donation = () => {
-  return (
-    <>
-      <div className='container'>
-        <Report />
-        <Collection hideItems={true} />
-      </div>
-    </>
-  )
-}
+  const [selectedYear, setSelectedYear] = useState(
+    new Date().getFullYear()
+  );
 
-export default Donation
+  return (
+    <div className="container">
+      <Report
+        selectedYear={selectedYear}
+        onYearChange={setSelectedYear}
+      />
+
+      <Collection
+        hideItems={true}
+        selectedYear={selectedYear}
+      />
+    </div>
+  );
+};
+
+export default Donation;

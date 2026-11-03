@@ -1,51 +1,96 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Collection from "../components/Collection";
 import Spend from "../components/Spend";
 import Report from "../components/Report";
-import { Link } from "react-router-dom";
 
 const Adminpanel = () => {
-    const [activeComponent, setActiveComponent] = useState("report"); // default component
+  const [activeComponent, setActiveComponent] = useState("collection");
+  const [selectedYear, setSelectedYear] = useState(
+    new Date().getFullYear()
+  );
 
-    // Function to render the selected component
-    const renderContent = () => {
-        switch (activeComponent) {
-            case "collection":
-                return <Collection />;
-            case "spend":
-                return <Spend />;
-            default:
-                return <Collection />;
-        }
-    };
-    return (
-        <section className="adminpanel-wrapper">
-            <div className="container-fuild">
-                <div className="row">
-                    <div className="sidebar border border-right col-md-3 col-lg-2 p-0 shadow-sm d-sm-block d-block">
-                        <div className="sidebarinner">
-                            <ul className="nav flex-column">
-                                <li className="nav-link">
-                                    <Link className="nav-link d-flex align-items-center gap-2" onClick={() => setActiveComponent("collection")}>
-                                        <i className="bi bi-collection-fill"></i>
-                                        Collections
-                                    </Link>
-                                </li>
-                                <li className="nav-link">
-                                    <Link className="nav-link d-flex align-items-center gap-2" onClick={() => setActiveComponent("spend")}>
-                                        <i className="bi bi-wallet-fill"></i> Expenses</Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="body-content col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                        <Report />
-                        {renderContent()}
-                    </div>
-                </div>
+  const renderContent = () => {
+    switch (activeComponent) {
+      case "collection":
+        return (
+          <Collection
+            selectedYear={selectedYear}
+          />
+        );
+
+      case "spend":
+        return (
+          <Spend
+            selectedYear={selectedYear}
+          />
+        );
+
+      default:
+        return (
+          <Collection
+            selectedYear={selectedYear}
+          />
+        );
+    }
+  };
+
+  return (
+    <section className="adminpanel-wrapper">
+      <div className="container-fluid">
+        <div className="row">
+
+          {/* Sidebar */}
+          <div className="sidebar border border-right col-md-3 col-lg-2 p-0 shadow-sm">
+            <div className="sidebarinner">
+              <ul className="nav flex-column">
+
+                <li className="nav-item">
+                  <button
+                    type="button"
+                    className={`nav-link d-flex align-items-center gap-2 ${
+                      activeComponent === "collection" ? "active" : ""
+                    }`}
+                    onClick={() => setActiveComponent("collection")}
+                  >
+                    <i className="bi bi-collection-fill"></i>
+                    Collections
+                  </button>
+                </li>
+
+                <li className="nav-item">
+                  <button
+                    type="button"
+                    className={`nav-link d-flex align-items-center gap-2 ${
+                      activeComponent === "spend" ? "active" : ""
+                    }`}
+                    onClick={() => setActiveComponent("spend")}
+                  >
+                    <i className="bi bi-wallet-fill"></i>
+                    Expenses
+                  </button>
+                </li>
+
+              </ul>
             </div>
-        </section>
-    );
+          </div>
+
+          {/* Main Content */}
+          <div className="body-content col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+            {/* Shared Report and Year Selector */}
+            <Report
+              selectedYear={selectedYear}
+              onYearChange={setSelectedYear}
+            />
+
+            {/* Selected Component */}
+            {renderContent()}
+
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Adminpanel;

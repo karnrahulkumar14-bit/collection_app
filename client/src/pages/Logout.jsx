@@ -1,5 +1,6 @@
+
 import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 
 export const Logout = () => {
@@ -7,10 +8,14 @@ export const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // clear token + state on mount
+    // Clear authentication token and user state
     LogoutUser();
-    navigate("/login"); // redirect to login page after logout
+
+    // Redirect to login page
+    navigate("/login", { replace: true });
   }, [LogoutUser, navigate]);
 
-  return null; // nothing to render
+  return null;
 };
+
+export default Logout;
