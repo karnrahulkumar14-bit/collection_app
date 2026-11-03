@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Report from '../components/Report';
 import god from '../assets/images/god.jpg';
-import IMG_1911 from '../assets/images/IMG_1911.jpg';
-import IMG_1912 from '../assets/images/IMG_1913.jpg';
-import IMG_1913 from '../assets/images/IMG_1912.jpg';
-import IMG_1914 from '../assets/images/IMG_1914.jpg';
+import IMG_1911 from '../assets/images/IMG_1911.JPG';
+import IMG_1912 from '../assets/images/IMG_1913.JPG';
+import IMG_1913 from '../assets/images/IMG_1912.JPG';
+import IMG_1914 from '../assets/images/IMG_1914.JPG';
 import IMG_1915 from '../assets/images/IMG_1915.jpeg';
 import IMG_1918 from '../assets/images/IMG_1918.jpeg';
 import IMG_1920 from '../assets/images/IMG_1920.jpeg';
