@@ -924,6 +924,9 @@ section.adminpanel-wrapper {
 .modal-backdrop.show:last-child {
     display: none;
 }
+.collections .item {
+    border-bottom: 1px solid #ccc;
+}
 /* =========================================================
    9. RESPONSIVE (largest to smallest)
    ========================================================= */
@@ -1021,6 +1024,30 @@ section.adminpanel-wrapper {
   .rp-wrapper, .dl-wrapper, .cl-wrapper {
     padding: 20px 0 32px;
   }
+   .collections .item:not(:first-child) .hs-name,
+.collections .item:not(:first-child) .hs-date {
+    width: 60%;
+}
+
+.collections .item:not(:first-child) .hs-amount {
+    width: 30%;
+    order: 2;
+}
+
+.collections .item:not(:first-child) .row {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
+.collections .item:not(:first-child) .hs-name {
+    order: 1;
+}
+
+.collections .item:not(:first-child) .hs-date {
+    order: 3;
+}
 }
 
 @media (max-width: 640px) {
