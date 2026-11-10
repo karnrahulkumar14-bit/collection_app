@@ -1,11 +1,21 @@
 import { useState, useEffect, useMemo } from "react";
-
+import { Modal } from "bootstrap";
 const Spend = ({
     hideIcon = false,
     selectedYear = new Date().getFullYear(),
 }) => {
     const [donations, setDonations] = useState([]);
-    const [form, setForm] = useState({ name: "", date: "", amount: "" });
+    const [form, setForm] = useState({  
+        name: "",
+        description: "",
+        date: "",
+        amount: "" 
+    });
+    const formatDate = (date) => {
+    if (!date) return "";
+
+    return new Date(date).toISOString().split("T")[0];
+    };
     const [selectedDonation, setSelectedDonation] = useState(null);
 
     // Fetch expenses
@@ -33,11 +43,10 @@ const Spend = ({
         return donations.filter((expense) => {
             if (!expense.date) return false;
 
-            const expenseYear = new Date(
-                `${expense.date}T00:00:00`
-            ).getFullYear();
-
-            return expenseYear === Number(selectedYear);
+            return (
+                new Date(expense.date).getFullYear() ===
+                Number(selectedYear)
+            );
         });
     }, [donations, selectedYear]);
 
@@ -70,20 +79,22 @@ const Spend = ({
                 return false;
             }
 
-            setForm({ name: "", date: "", amount: "" });
+            setForm({ 
+                name: "",
+                description: "",
+                date: "",
+                amount: ""
+            });
             setSelectedDonation(null);
 
             await fetchDonations();
 
             // Close Bootstrap modal
-            const modal = document.getElementById("exampleModal");
-
-            if (modal && window.bootstrap) {
-                const modalInstance =
-                    window.bootstrap.Modal.getInstance(modal);
-
-                modalInstance?.hide();
-            }
+        const modalElement = document.getElementById("exampleModal");
+        if (modalElement) {
+            const modalInstance = Modal.getInstance(modalElement);
+            modalInstance?.hide();
+        }
 
             return true;
         } catch (err) {
@@ -136,6 +147,7 @@ const Spend = ({
                                         name: "",
                                         date: "",
                                         amount: "",
+                                        description: "",
                                     });
                                 }}
                             >
@@ -194,6 +206,7 @@ const Spend = ({
                                         >
                                             <div className="hs-name col-sm-6 col-xs-12">
                                                 {d.name}
+                                                <span className="fs-0.5">{d.description}</span>
                                             </div>
                                              <div className="hs-date col-sm-3 col-xs-12">
                                                 {d.date}
@@ -201,8 +214,6 @@ const Spend = ({
                                             <div className="hs-amount col-sm-3 col-xs-12">
                                                 ₹{d.amount}
                                             </div>
-
-
                                         </div>
 
                                         {!hideIcon && (
@@ -214,11 +225,11 @@ const Spend = ({
                                                     data-bs-target="#exampleModal"
                                                     onClick={() => {
                                                         setSelectedDonation(d);
-
                                                         setForm({
                                                             name: d.name,
-                                                            date: d.date,
-                                                            amount: d.amount,
+                                                            description: d.description || "",
+                                                            date: formatDate(d.date),
+                                                            amount: d.amount
                                                         });
                                                     }}
                                                 >
@@ -302,6 +313,28 @@ const Spend = ({
                                             className="form-control"
                                         />
                                     </div>
+                                    <div className="mb-3">
+                                        <label
+                                            htmlFor="description"
+                                            className="col-form-label"
+                                        >
+                                            Description
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="description"
+                                            placeholder="Enter description"
+                                            value={form.description}
+                                            onChange={(e) =>
+                                                setForm({
+                                                    ...form,
+                                                    description: e.target.value,
+                                                })
+                                            }
+                                            className="form-control"
+                                        />
+                                    </div>
 
                                     <div className="mb-3">
                                         <label
@@ -365,14 +398,13 @@ const Spend = ({
                                     onClick={async () => {
                                         if (
                                             form.name.trim() &&
+                                            form.description.trim() &&
                                             form.date &&
                                             form.amount !== ""
                                         ) {
                                             await handleSubmit();
                                         } else {
-                                            alert(
-                                                "Please fill all fields before submitting."
-                                            );
+                                            alert("Please fill all fields before submitting.");
                                         }
                                     }}
                                 >
