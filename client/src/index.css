@@ -898,31 +898,40 @@ section.adminpanel-wrapper {
   box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
 }
 .collections .item:first-child {
-    background-color: #F1F5FA;
-    padding: 12px;
+  background-color: #F1F5FA;
+  padding: 12px;
 }
 
 .collections .item {
-    padding: 10px 20px;
-    margin: 0;
+  padding: 10px 20px;
+  margin: 0;
 }
 
 .collections ul.list-items.p-4 {
-    padding: 0 !important;
-    font-family: 'Inter';
+  padding: 0 !important;
+  font-family: 'Inter';
 }
 
 .collections ul.list-items .hs-amount {
-    color: var(--ui-primary);
-    text-align: right;
+  color: var(--ui-primary);
+  text-align: right;
 }
 .hs-name span.des {
-    display: block;
-    font-size: 14px;
-    color: var(--lineColor);
+  display: block;
+  font-size: 14px;
+  color: var(--lineColor);
 }
 .modal-backdrop.show:last-child {
-    display: none;
+  display: none;
+}
+.collections .item {
+  border-bottom: 1px solid #ccc
+}
+button.mobile-trigger {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 0 5px;
+  font-size: 30px;
 }
 .collections .item {
     border-bottom: 1px solid #ccc;
@@ -956,6 +965,17 @@ section.adminpanel-wrapper {
 }
 
 @media (max-width: 767px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    height: 165px;
+    padding: 10px;
+  }
   .form-control::placeholder {
     font-size: 16px;
   }
@@ -1012,6 +1032,7 @@ section.adminpanel-wrapper {
   .img-gallary .gallery-item img {
     height: auto;
   }
+
   .collections .item {
       padding: 10px;
       margin: 0;
@@ -1021,8 +1042,33 @@ section.adminpanel-wrapper {
       padding: 0;
       margin: 0;
   }
+
   .rp-wrapper, .dl-wrapper, .cl-wrapper {
     padding: 20px 0 32px;
+  }
+
+  .collections .item:not(:first-child) .hs-name,.collections .item:not(:first-child) .hs-date {
+    width: 60%
+  }
+
+  .collections .item:not(:first-child) .hs-amount {
+    width: 30%;
+    order: 2
+  }
+
+  .collections .item:not(:first-child) .row {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px
+  }
+
+  .collections .item:not(:first-child) .hs-name {
+    order: 1
+  }
+  
+  .collections .item:not(:first-child) .hs-date {
+    order: 3
   }
    .collections .item:not(:first-child) .hs-name,
 .collections .item:not(:first-child) .hs-date {

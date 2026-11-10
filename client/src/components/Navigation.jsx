@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../store/auth";
 
 function classNames(...classes) {
@@ -32,6 +33,12 @@ export default function Header() {
       (item) => item.name !== "Collections" && item.name !== "Expenses"
     )
     : navigation;
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const hamburger = () => {
+        setIsOpen(!isOpen);
+    };
   return (
     <header className="navbar navbar-expand-lg header-wrapper sticky-top shadow-sm">
       <div className="container">
@@ -42,20 +49,23 @@ export default function Header() {
         </Link>
 
         {/* Toggler */}
+        {/* <button className="mobile-trigger" onClick={hamburger}>
+            <i className="bi bi-list"></i>
+        </button> */}
+
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          onClick={hamburger}
           aria-controls="navbarNav"
-          aria-expanded="false"
+          aria-expanded={isOpen}
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon"></span>
         </button>
 
         {/* Nav Links */}
-        <div className="collapse navbar-collapse naviagtion" id="navbarNav">
+        <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="navbarNav">
           <ul className="navbar-nav ms-auto">
             {filteredNav.map((item) => {
               const isActive = location.pathname === item.href;

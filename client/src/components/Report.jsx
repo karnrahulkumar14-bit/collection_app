@@ -5,8 +5,22 @@ import YearSelector from "../components/YearSelector";
 
 const inr = (value) => `₹${Number(value).toLocaleString("en-IN")}`;
 
-const getYear = (dateString) =>
-  new Date(`${dateString}T00:00:00`).getFullYear();
+const getYear = (dateString) => {
+    if (!dateString) return null;
+
+    // Handles both YYYY-MM-DD and MongoDB ISO date formats
+    const datePart = String(dateString).slice(0, 10);
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(datePart)) {
+        return Number(datePart.slice(0, 4));
+    }
+
+    const date = new Date(dateString);
+
+    return Number.isNaN(date.getTime())
+        ? null
+        : date.getFullYear();
+};
 
 // Defined outside the component so it isn't a hook dependency
 const filterByYear = (items, year) =>
