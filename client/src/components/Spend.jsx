@@ -398,7 +398,6 @@ const Spend = ({
                                     onClick={async () => {
                                         if (
                                             form.name.trim() &&
-                                            form.description.trim() &&
                                             form.date &&
                                             form.amount !== ""
                                         ) {
