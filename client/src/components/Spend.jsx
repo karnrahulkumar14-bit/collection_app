@@ -206,10 +206,10 @@ const Spend = ({
                                         >
                                             <div className="hs-name col-sm-6 col-xs-12">
                                                 {d.name}
-                                                <span className="fs-0.5">{d.description}</span>
+                                                <span className="des">{d.description}</span>
                                             </div>
                                              <div className="hs-date col-sm-3 col-xs-12">
-                                                {d.date}
+                                                {formatDate(d.date)}
                                             </div>
                                             <div className="hs-amount col-sm-3 col-xs-12">
                                                 ₹{d.amount}
